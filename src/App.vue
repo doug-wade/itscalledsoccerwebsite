@@ -1,15 +1,28 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <h1>Team goals added</h1>
+  <TeamGoalsAdded v-for="team in teamsGoalsAdded" :value="team" :key="team.team_id"/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TeamGoalsAdded from './components/TeamGoalsAdded.vue'
+import Client from 'itscalledsoccer'
+
+const client = new Client();
 
 export default {
-  name: 'App',
+  name: 'ItsCalledSoccerWebsite',
   components: {
-    HelloWorld
+    TeamGoalsAdded
+  },
+  async mounted() {
+    this.teamsGoalsAdded = await client.getTeamsGoalsAdded({
+      zone: 27,
+    });
+  },
+  data() {
+    return {
+      teamGoalsAdded: []
+    }
   }
 }
 </script>
